@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+@import 'css/themes.css';
+
+@theme {
+  --color-background: var(--theme-background);
+  --color-background-secundary: var(--theme-background-secundary);
+  --color-button: var(--theme-button);
+  --color-button-hover: var(--theme-button-hover);
+  --color-textButton: var(--theme-textButton);
+  --color-button-border: var(--theme-button-border);
+  --color-button-border-hover: var(--theme-button-border-hover);
+  --color-button-secundary: var(--theme-button-secundary);
+  --color-button-secundary-hover: var(--theme-button-secundary-hover);
+  --color-textButton-secundary: var(--theme-textButton-secundary);
+  --color-link: var(--theme-link);
+  --color-link-hover: var(--theme-link-hover);
+  --color-text: var(--theme-text);
+  --color-text-secondary: var(--theme-text-secondary);
+  --color-title: var(--theme-title);
+  --color-title-secondary: var(--theme-title-secondary);
+  --color-text-disabled: var(--theme-text-disabled);
+  --color-border: var(--theme-border);
+
+  --animate-nav: nav 200ms ease-out;
+  --animate-page-enter: page-enter 220ms ease-out;
+  --animate-icon: icon-pop 180ms ease-out;
+
+  @keyframes nav {
+    from {
+      opacity: 0;
+      transform: translateX(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes icon-pop {
+    0% {
+      transform: scale(0.9);
+    }
+
+    70% {
+      transform: scale(1.08);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #0b0b14;
+  color: white;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #343448;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a62;
+}
