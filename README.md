@@ -1,9 +1,10 @@
-# 🔐 Gestor de Contraseñas
+# Gestor de Contraseñas
 
-> Porque "123456" no es una contraseña, es un grito de auxilio.
+
 
 Una app de escritorio para guardar tus contraseñas sin depender de la memoria (la tuya, no la de la compu — esa la usamos igual). Corre en Windows, Mac y Linux, no manda absolutamente nada a ningún servidor propio, y viene con un generador de claves, categorías, favoritos y un cambio de tema que, sinceramente, se luce más de lo que un gestor de contraseñas necesita lucirse.
 
+> Porque "123456" no es una contraseña, es un grito de auxilio.
 <p align="center">
   <img alt="Licencia" src="https://img.shields.io/badge/licencia-ISC-8a2be2?style=flat-square">
   <img alt="Hecho con" src="https://img.shields.io/badge/hecho%20con-React%20%2B%20Electron-61dafb?style=flat-square">
@@ -96,7 +97,7 @@ Esto lo hice a pulmón, con café, música y algún que otro `console.log` que s
 
 <p align="center">
   <a href="https://cafecito.app/elias_mk">
-    <img src="https://chatgpt.com/backend-api/estuary/content?id=file_00000000a288820e98599de70ce1e076&ts=497004&p=fs&cid=1&sig=d7bea4bcd2683a1aad93b37e5fc90f5e6835469a761f71c11ca88d50c59ee860&v=0" alt="Invitame un cafecito">
+    <img width="572"  alt="image" src="https://github.com/user-attachments/assets/8e0f827e-d147-41bf-9dc3-358d9113342f"alt=" Invitame un cafecito />
   </a>
 </p>
 
