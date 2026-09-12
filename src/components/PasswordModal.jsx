@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { IconLock, IconEyeFill, IconEyeSlashFill } from './Icon/Navigation_icons';
 
 const CATEGORIES = [
   'Desarrollo',
@@ -267,7 +268,7 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
                       aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                       className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-text-secondary transition-colors duration-200 hover:bg-button-secundary hover:text-text focus:outline-none focus:ring-2 focus:ring-button/30"
                     >
-                      {showPassword ? '🙈' : '👁'}
+                      {showPassword ? <IconEyeSlashFill /> : <IconEyeFill />}
                     </button>
                   </div>
                 </div>
@@ -320,7 +321,9 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
                     {icon ? (
                       <img src={icon} alt="" className="h-9 w-9 object-contain" />
                     ) : (
-                      <span className="text-xl">🔐</span>
+                      <span className="text-xl">
+                        <IconLock />
+                      </span>
                     )}
                   </div>
 

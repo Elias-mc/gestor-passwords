@@ -1,3 +1,4 @@
+import { IconStar, IconLock } from './Icon/Navigation_icons';
 function PasswordCard({ password, onFavorite, onClick, style }) {
   return (
     <div
@@ -22,7 +23,7 @@ function PasswordCard({ password, onFavorite, onClick, style }) {
           />
         ) : (
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-button/10 text-lg transition-transform duration-200 group-hover:scale-105">
-            🔐
+            <IconLock />
           </div>
         )}
 
@@ -50,7 +51,7 @@ function PasswordCard({ password, onFavorite, onClick, style }) {
           }`}
         >
           <span key={password.favorito ? 'on' : 'off'} className="inline-block animate-star-pop">
-            ★
+            <IconStar />
           </span>
         </button>
 
