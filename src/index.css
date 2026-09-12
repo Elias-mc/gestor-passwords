@@ -25,9 +25,6 @@
   --animate-page-enter: page-enter 220ms ease-out;
   --animate-icon: icon-pop 180ms ease-out;
 
-  /* ========================================
-     NUEVAS: para las tarjetas, favoritos y modales
-     ======================================== */
   --animate-card-in: card-in 320ms ease-out both;
   --animate-star-pop: star-pop 360ms ease-out;
   --animate-modal-in: modal-in 200ms ease-out;
@@ -71,9 +68,6 @@
     }
   }
 
-  /* Entrada escalonada de las tarjetas de contraseña: cada una arranca
-     un poco más tarde que la anterior (ver PasswordList.jsx), así no
-     aparecen todas de golpe. */
   @keyframes card-in {
     from {
       opacity: 0;
@@ -164,8 +158,6 @@ button {
   cursor: pointer;
 }
 
-/* Los elementos con "sr-only" quedan disponibles para lectores de
-   pantalla pero no ocupan espacio visual (lo usa ThemeColorPicker). */
 .sr-only {
   position: absolute;
   width: 1px;

@@ -46,9 +46,6 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
   const [url, setUrl] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // ========================================
-  // ÍCONO: LINK O ARCHIVO
-  // ========================================
   const [iconMode, setIconMode] = useState('link');
   const [icon, setIcon] = useState('');
   const [iconError, setIconError] = useState('');
@@ -138,9 +135,6 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
       }}
     >
       <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-background-secundary shadow-2xl transition-colors duration-300 sm:max-h-[90vh]">
-        {/* ========================================
-            HEADER
-        ======================================== */}
         <div className="shrink-0 border-b border-border px-5 py-4 sm:px-6 sm:py-5">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
@@ -162,14 +156,8 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
           </div>
         </div>
 
-        {/* ========================================
-            CONTENIDO
-        ======================================== */}
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
           <form id="password-form" onSubmit={handleSubmit} className="flex flex-col gap-6">
-            {/* ========================================
-                DATOS PRINCIPALES
-            ======================================== */}
             <section>
               <div className="mb-3">
                 <h3 className="text-sm font-semibold text-title">Información de la cuenta</h3>
@@ -226,9 +214,6 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
               </div>
             </section>
 
-            {/* ========================================
-                ACCESO
-            ======================================== */}
             <section>
               <div className="mb-3">
                 <h3 className="text-sm font-semibold text-title">Datos de acceso</h3>
@@ -289,9 +274,6 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
               </div>
             </section>
 
-            {/* ========================================
-                SITIO WEB
-            ======================================== */}
             <section>
               <div className="mb-3">
                 <h3 className="text-sm font-semibold text-title">Sitio web</h3>
@@ -318,9 +300,6 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
               />
             </section>
 
-            {/* ========================================
-                ICONO
-            ======================================== */}
             <section>
               <div className="mb-3">
                 <h3 className="text-sm font-semibold text-title">
@@ -419,9 +398,6 @@ function PasswordModal({ isOpen, onClose, onAddPassword }) {
           </form>
         </div>
 
-        {/* ========================================
-            FOOTER / ACCIONES
-        ======================================== */}
         <div className="shrink-0 border-t border-border bg-background-secundary px-5 py-4 sm:px-6">
           <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <button

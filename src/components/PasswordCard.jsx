@@ -15,7 +15,11 @@ function PasswordCard({ password, onFavorite, onClick, style }) {
     >
       <div className="flex items-center gap-4">
         {password.icono ? (
-          <img src={password.icono} alt={password.name} className="h-10 w-10 rounded-lg object-contain" />
+          <img
+            src={password.icono}
+            alt={password.name}
+            className="h-10 w-10 rounded-lg object-contain"
+          />
         ) : (
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-button/10 text-lg transition-transform duration-200 group-hover:scale-105">
             🔐
@@ -23,7 +27,9 @@ function PasswordCard({ password, onFavorite, onClick, style }) {
         )}
 
         <div>
-          <h3 className="font-semibold text-text transition-colors duration-300">{password.name}</h3>
+          <h3 className="font-semibold text-text transition-colors duration-300">
+            {password.name}
+          </h3>
           <p className="text-sm text-text-secondary transition-colors duration-300">
             {password.categoria || 'Sin categoría'}
           </p>
@@ -34,8 +40,6 @@ function PasswordCard({ password, onFavorite, onClick, style }) {
         <button
           type="button"
           onClick={(event) => {
-            // Sin esto, tocar la estrella también dispara el onClick de la
-            // tarjeta y te manda al detalle en vez de solo marcar favorito.
             event.stopPropagation();
             onFavorite(password.id);
           }}
@@ -45,9 +49,6 @@ function PasswordCard({ password, onFavorite, onClick, style }) {
             password.favorito ? 'text-amber-400' : 'text-text-disabled hover:text-text-secondary'
           }`}
         >
-          {/* La "key" atada al valor de favorito hace que React remonte
-              este span cada vez que cambia, así la animación de "pop"
-              se repite en cada click en vez de jugarse una sola vez. */}
           <span key={password.favorito ? 'on' : 'off'} className="inline-block animate-star-pop">
             ★
           </span>

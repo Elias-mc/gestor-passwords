@@ -51,9 +51,6 @@ function SyncImportModal({ isOpen, onClose, onImport }) {
       setPendingPasswords(parsed);
       setStep('preview');
     } catch (err) {
-      // No distinguimos entre "código inválido" y "frase incorrecta" en
-      // la mayoría de los casos: dar esa pista de más facilitaría probar
-      // combinaciones al tanteo.
       setError(err.message || 'No se pudo importar el pack.');
     } finally {
       setLoading(false);

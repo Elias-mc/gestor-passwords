@@ -20,9 +20,6 @@ function formatExpiry(isoString) {
 }
 
 function SyncExportModal({ isOpen, onClose, passwords }) {
-  // ========================================
-  // PASOS: "form" -> "result"
-  // ========================================
   const [step, setStep] = useState('form');
   const [passphrase, setPassphrase] = useState('');
   const [confirmPassphrase, setConfirmPassphrase] = useState('');

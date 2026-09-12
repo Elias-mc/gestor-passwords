@@ -3,11 +3,42 @@
   "version": "1.0.0",
   "description": "Gestor de contraseñas con React, Vite, Tailwind y Electron",
   "main": "electron/main.cjs",
+  "desktopName": "gestor-contrasenas.desktop",
   "scripts": {
+    "electron:dev": "concurrently -k \"npm:dev\" \"wait-on tcp:5173 && cross-env ELECTRON_RENDERER_URL=http://localhost:5173 electron electron/main.cjs\"",
+    "electron:preview": "npm run build && electron electron/main.cjs",
+    "electron:build": "npm run build && electron-builder",
     "dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
     "build": "vite build",
-    "start": "electron .",
     "preview": "vite preview"
+  },
+  "build": {
+    "appId": "com.tuusuario.gestorcontrasenas",
+    "productName": "Gestor de Contraseñas",
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "maintainer": "Elias <macayzamora1234@gmail.com>",
+      "syncDesktopName": true,
+      "icon": "build/icon.png"
+    }
   },
   "keywords": [],
   "author": "",
@@ -22,7 +53,7 @@
     "@tailwindcss/cli": "^4.3.3",
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^10.0.5",
-    "cross-env": "^10.0.0",
+    "cross-env": "^10.1.0",
     "electron": "^44.3.0",
     "vite": "^7.3.6",
     "wait-on": "^8.0.4"

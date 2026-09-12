@@ -101,10 +101,6 @@ function WinPassword({ passwords, onAdd, onSelectPassword, onFavorite, onCategor
           </button>
         </div>
 
-        {/* ========================================
-            LISTA
-        ======================================== */}
-
         <PasswordList
           passwords={filteredPasswords}
           onFavorite={onFavorite}

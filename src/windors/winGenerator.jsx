@@ -22,8 +22,6 @@ const CLIPBOARD_CLEAR_MS = 25000;
 
 const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500';
 
-// Clase compartida por los botones "cáscara" (borde + hover), igual que en
-// el detalle de contraseña. Ya trae "transition" desde donde se usa.
 const ghostButton = 'border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-900 ';
 
 function passwordStrength(value) {
@@ -37,11 +35,6 @@ function passwordStrength(value) {
   return Math.min(score, 4);
 }
 
-// ========================================
-// CHECKBOX PERSONALIZADO
-// ========================================
-// Componente chico para no repetir el mismo bloque 4 veces: label +
-// checkbox + estado deshabilitado si es la última opción activa.
 function OptionToggle({ label, checked, onChange, disabled }) {
   return (
     <label
@@ -71,9 +64,6 @@ function WinGenerator() {
   const [copied, setCopied] = useState(false);
   const clipboardTimer = useRef(null);
 
-  // Cuántas opciones de tipo de caracter están activas. Si solo queda
-  // una prendida, la deshabilitamos para que el usuario no pueda apagar
-  // todo y quedarse sin ningún set de caracteres para generar.
   const activeCount = [useUpper, useLower, useNumbers, useSymbols].filter(Boolean).length;
 
   const pool = useMemo(() => {
@@ -94,9 +84,6 @@ function WinGenerator() {
     setCopied(false);
   }
 
-  // Generamos una la primera vez y cada vez que cambian longitud u
-  // opciones, para que la contraseña mostrada siempre respete la
-  // configuración actual en vez de quedar desactualizada.
   useEffect(() => {
     generate();
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,8 +1,5 @@
 import PasswordCard from './PasswordCard';
 
-// Tope de stagger: pasado cierto punto, seguir sumando delay solo hace
-// que las últimas tarjetas de una lista larga tarden demasiado en
-// aparecer, así que lo topamos en 8 y de ahí en más entran juntas.
 const MAX_STAGGER_INDEX = 8;
 const STAGGER_STEP_MS = 40;
 

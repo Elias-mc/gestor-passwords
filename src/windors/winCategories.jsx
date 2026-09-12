@@ -13,11 +13,6 @@ function pillClass(active) {
 function WinCategories({ passwords, onSelectPassword, onFavorite }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // ========================================
-  // CONTEO POR CATEGORÍA
-  // ========================================
-  // Agrupamos ordenando por cantidad descendente, así las categorías más
-  // usadas aparecen primero en los chips.
   const categories = useMemo(() => {
     const counts = new Map();
     passwords.forEach((password) => {
