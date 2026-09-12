@@ -95,10 +95,11 @@ Mientras no haya una release publicada, seguí los pasos de **["Poner el proyect
 
 Esto lo hice a pulmón, con café, música y algún que otro `console.log` que se me olvidó borrar (si encontraste uno, hacé de cuenta que no). Si esta app te salvó de perder una contraseña o simplemente te cayó simpática, podés invitarme un café acá:
 
+No es obligatorio, eh. Pero si lo hacés, prometo tomármelo pensando en vos. 🫶
+
 <p align="center">
   <a href="https://cafecito.app/elias_mk">
-    <img width="572"  alt="image" src="https://github.com/user-attachments/assets/8e0f827e-d147-41bf-9dc3-358d9113342f"alt=" Invitame un cafecito />
+  <img width="572"  alt="image" src="https://github.com/user-attachments/assets/8e0f827e-d147-41bf-9dc3-358d9113342f"alt=" Invitame un cafecito "/>
   </a>
 </p>
 
-No es obligatorio, eh. Pero si lo hacés, prometo tomármelo pensando en vos. 🫶
