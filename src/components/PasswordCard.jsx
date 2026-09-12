@@ -1,36 +1,31 @@
-function PasswordCard({ password, onFavorite, onClick }) {
+function PasswordCard({ password, onFavorite, onClick, style }) {
   return (
     <div
       onClick={onClick}
       role="button"
       tabIndex={0}
       onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
+        if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
           onClick();
         }
       }}
-      className="group flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-violet-500/40 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+      style={style}
+      className="group flex animate-card-in cursor-pointer items-center justify-between gap-4 rounded-xl border border-border bg-background-secundary p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-button/40 hover:shadow-lg hover:shadow-button/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-button"
     >
       <div className="flex items-center gap-4">
         {password.icono ? (
-          <img
-            src={password.icono}
-            alt={password.name}
-            className="h-10 w-10 rounded-lg object-contain"
-          />
+          <img src={password.icono} alt={password.name} className="h-10 w-10 rounded-lg object-contain" />
         ) : (
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-lg">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-button/10 text-lg transition-transform duration-200 group-hover:scale-105">
             🔐
           </div>
         )}
 
         <div>
-          <h3 className="font-semibold text-slate-900 transition-colors duration-300 dark:text-white">
-            {password.name}
-          </h3>
-          <p className="text-sm text-slate-500 transition-colors duration-300 dark:text-slate-400">
-            {password.categoria || "Sin categoría"}
+          <h3 className="font-semibold text-text transition-colors duration-300">{password.name}</h3>
+          <p className="text-sm text-text-secondary transition-colors duration-300">
+            {password.categoria || 'Sin categoría'}
           </p>
         </div>
       </div>
@@ -44,22 +39,21 @@ function PasswordCard({ password, onFavorite, onClick }) {
             event.stopPropagation();
             onFavorite(password.id);
           }}
-          title={
-            password.favorito ? "Quitar de favoritos" : "Marcar como favorito"
-          }
+          title={password.favorito ? 'Quitar de favoritos' : 'Marcar como favorito'}
           aria-pressed={Boolean(password.favorito)}
-          className={`rounded text-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${
-            password.favorito
-              ? "text-amber-400"
-              : "text-slate-400 hover:text-slate-600 dark:text-slate-600 dark:hover:text-slate-300"
+          className={`rounded text-lg transition-transform duration-150 hover:scale-110 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-button ${
+            password.favorito ? 'text-amber-400' : 'text-text-disabled hover:text-text-secondary'
           }`}
         >
-          ★
+          {/* La "key" atada al valor de favorito hace que React remonte
+              este span cada vez que cambia, así la animación de "pop"
+              se repite en cada click en vez de jugarse una sola vez. */}
+          <span key={password.favorito ? 'on' : 'off'} className="inline-block animate-star-pop">
+            ★
+          </span>
         </button>
 
-        {/* Antes le faltaba la clase "group" al contenedor de arriba,
-            así que este hover nunca se disparaba. */}
-        <span className="text-xl text-slate-400 transition group-hover:text-violet-400 dark:text-slate-500">
+        <span className="text-xl text-text-disabled transition-all duration-200 group-hover:translate-x-1 group-hover:text-button">
           →
         </span>
       </div>

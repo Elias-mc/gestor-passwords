@@ -49,15 +49,13 @@ function OptionToggle({ label, checked, onChange, disabled }) {
         disabled ? 'opacity-50' : 'cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5'
       }`}
     >
-      <span className="text-slate-600 transition-colors duration-300 dark:text-slate-300">
-        {label}
-      </span>
+      <span className="text-text-di transition-colors duration-300 ">{label}</span>
       <input
         type="checkbox"
         checked={checked}
         disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
-        className={`h-4 w-4 shrink-0 rounded border-slate-300 bg-transparent accent-violet-600 dark:border-white/20 ${focusRing}`}
+        className={`h-4 w-4 shrink-0 rounded border-button-border-hover bg-transparent accent-button ${focusRing}`}
       />
     </label>
   );
@@ -155,7 +153,7 @@ function WinGenerator() {
               disabled={!pool}
               title="Generar otra"
               aria-label="Generar otra contraseña"
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition disabled:cursor-not-allowed disabled:opacity-40 ${ghostButton} ${focusRing}`}
+              className={`flex h-11 w-11 text-text shrink-0 items-center justify-center rounded-lg border transition disabled:cursor-not-allowed disabled:opacity-40 ${ghostButton} ${focusRing}`}
             >
               <IconRefresh />
             </button>
@@ -166,7 +164,7 @@ function WinGenerator() {
               disabled={!generated}
               title="Copiar contraseña"
               aria-label="Copiar contraseña"
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition disabled:cursor-not-allowed disabled:opacity-40 ${ghostButton} ${focusRing}`}
+              className={`flex h-11 w-11 text-text  shrink-0 items-center justify-center rounded-lg border transition disabled:cursor-not-allowed disabled:opacity-40 ${ghostButton} ${focusRing}`}
             >
               {copied ? (
                 <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
@@ -179,7 +177,7 @@ function WinGenerator() {
           </div>
 
           {copied && (
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-text-disabled">
               Copiada. Se borra sola del portapapeles en {CLIPBOARD_CLEAR_MS / 1000} segundos.
             </p>
           )}
@@ -191,23 +189,23 @@ function WinGenerator() {
                   <div
                     key={i}
                     className={`flex-1 rounded-full transition-colors duration-300 ${
-                      i < strength ? STRENGTH_COLOR[strength] : 'bg-slate-200 dark:bg-white/10'
+                      i < strength ? STRENGTH_COLOR[strength] : 'bg-background'
                     }`}
                   />
                 ))}
               </div>
-              <p className="mt-1.5 text-xs text-slate-500">{STRENGTH_LABEL[strength]}</p>
+              <p className="mt-1.5 text-xs text-text-secondary">{STRENGTH_LABEL[strength]}</p>
             </div>
           )}
         </section>
 
         {/* LONGITUD */}
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 transition-colors duration-300 dark:border-white/10 dark:bg-[#0b1220]">
+        <section className="mt-6 rounded-2xl border border-background-secundary bg-background-secundary p-6 transition-colors duration-300">
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-sm font-medium text-slate-500 transition-colors duration-300 dark:text-slate-400">
+            <h3 className="text-sm font-medium text-text transition-colors duration-300">
               Longitud
             </h3>
-            <span className="rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-600 transition-colors duration-300 dark:text-violet-400">
+            <span className="rounded-full bg-button/45 px-4 py-2 text-xs font-semibold text-textButton transition-colors duration-300 ">
               {length} caracteres
             </span>
           </div>
@@ -219,18 +217,18 @@ function WinGenerator() {
             step={1}
             value={length}
             onChange={(e) => setLength(Number(e.target.value))}
-            className={`w-full accent-violet-600 ${focusRing}`}
+            className={`w-full accent-button ${focusRing}`}
           />
 
-          <div className="mt-1 flex justify-between text-xs text-slate-400 transition-colors duration-300 dark:text-slate-600">
+          <div className="mt-1 flex justify-between text-xs text-text-disabled transition-colors duration-300 ">
             <span>8</span>
             <span>64</span>
           </div>
         </section>
 
         {/* TIPOS DE CARACTERES */}
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 transition-colors duration-300 dark:border-white/10 dark:bg-[#0b1220]">
-          <h3 className="mb-3 text-sm font-medium text-slate-500 transition-colors duration-300 dark:text-slate-400">
+        <section className="mt-6 rounded-2xl border border-background-secundary bg-background-secundary p-6 transition-colors duration-300 ">
+          <h3 className="mb-3 text-sm font-medium text-text transition-colors duration-300 ">
             Tipos de caracteres
           </h3>
 
@@ -263,7 +261,7 @@ function WinGenerator() {
 
           {!pool && (
             <p
-              className="mt-3 text-xs text-red-600 transition-colors duration-300 dark:text-red-400"
+              className="mt-3 text-xs text-red-600 transition-colors duration-300 "
               aria-live="polite"
             >
               Activá al menos un tipo de caracter para poder generar.

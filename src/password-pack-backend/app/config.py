@@ -1,27 +1,91 @@
 import os
 
-# ========================================
-# CONFIGURACIÓN
-# ========================================
-# Todo se puede pisar con variables de entorno sin tocar código,
-# para poder ajustar esto en producción sin redeployar.
 
-# Cuántos días vive un pack antes de borrarse solo.
-PACK_EXPIRY_DAYS = int(os.getenv("PACK_EXPIRY_DAYS", "30"))
+def get_bool(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
 
-# Dónde vive la base. Por default un archivo SQLite al lado del proyecto;
-# en producción real conviene Postgres (alcanza con cambiar esta URL).
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./passpacks.db")
+    if value is None:
+        return default
 
-# Longitud del código que se le muestra al usuario para bajar el pack.
-CODE_LENGTH = int(os.getenv("CODE_LENGTH", "8"))
+    return value.lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
 
-# Cada cuántas horas corre el job que borra packs vencidos en background.
-# Además de esto, también se borra "al toque" si alguien pide un pack
-# vencido (borrado perezoso), así que esto es solo una limpieza de fondo.
-CLEANUP_INTERVAL_HOURS = float(os.getenv("CLEANUP_INTERVAL_HOURS", "6"))
 
-# Tamaño máximo del pack que se acepta subir (en bytes). Evita que alguien
-# mande archivos gigantes y llene el disco. 2 MB de sobra para un pack de
-# contraseñas, incluso con muchos íconos en base64.
-MAX_PACK_SIZE_BYTES = int(os.getenv("MAX_PACK_SIZE_BYTES", str(2 * 1024 * 1024)))
+PACK_EXPIRY_DAYS = int(
+    os.getenv("PACK_EXPIRY_DAYS", "30")
+)
+
+CODE_LENGTH = int(
+    os.getenv("CODE_LENGTH", "8")
+)
+
+MAX_PACK_SIZE_BYTES = int(
+    os.getenv(
+        "MAX_PACK_SIZE_BYTES",
+        str(2 * 1024 * 1024),
+    )
+)
+
+
+CLEANUP_INTERVAL_HOURS = float(
+    os.getenv(
+        "CLEANUP_INTERVAL_HOURS",
+        "6",
+    )
+)
+
+
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///./passpacks.db",
+)
+
+
+
+APP_ENV = os.getenv(
+    "APP_ENV",
+    "development",
+)
+
+
+
+CORS_ORIGINS_RAW = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173",
+)
+
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in CORS_ORIGINS_RAW.split(",")
+    if origin.strip()
+]
+
+
+TRUSTED_HOSTS_RAW = os.getenv(
+    "TRUSTED_HOSTS",
+    "localhost,127.0.0.1",
+)
+
+TRUSTED_HOSTS = [
+    host.strip()
+    for host in TRUSTED_HOSTS_RAW.split(",")
+    if host.strip()
+]
+
+
+if PACK_EXPIRY_DAYS <= 0:
+    raise ValueError("PACK_EXPIRY_DAYS debe ser mayor que 0")
+
+if CODE_LENGTH < 6:
+    raise ValueError("CODE_LENGTH debe ser al menos 6")
+
+if MAX_PACK_SIZE_BYTES <= 0:
+    raise ValueError("MAX_PACK_SIZE_BYTES debe ser mayor que 0")
+
+if CLEANUP_INTERVAL_HOURS <= 0:
+    raise ValueError("CLEANUP_INTERVAL_HOURS debe ser mayor que 0")

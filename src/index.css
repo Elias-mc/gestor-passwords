@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import 'css/themes.css';
+@import './css/themes.css';
 
 @theme {
   --color-background: var(--theme-background);
@@ -24,6 +24,14 @@
   --animate-nav: nav 200ms ease-out;
   --animate-page-enter: page-enter 220ms ease-out;
   --animate-icon: icon-pop 180ms ease-out;
+
+  /* ========================================
+     NUEVAS: para las tarjetas, favoritos y modales
+     ======================================== */
+  --animate-card-in: card-in 320ms ease-out both;
+  --animate-star-pop: star-pop 360ms ease-out;
+  --animate-modal-in: modal-in 200ms ease-out;
+  --animate-fade-in: fade-in 200ms ease-out both;
 
   @keyframes nav {
     from {
@@ -62,6 +70,62 @@
       transform: scale(1);
     }
   }
+
+  /* Entrada escalonada de las tarjetas de contraseña: cada una arranca
+     un poco más tarde que la anterior (ver PasswordList.jsx), así no
+     aparecen todas de golpe. */
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Toque juguetón al marcar/desmarcar favorito. */
+  @keyframes star-pop {
+    0% {
+      transform: scale(1) rotate(0deg);
+    }
+
+    35% {
+      transform: scale(1.35) rotate(-10deg);
+    }
+
+    70% {
+      transform: scale(0.9) rotate(6deg);
+    }
+
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 html,
@@ -98,6 +162,20 @@ textarea {
 
 button {
   cursor: pointer;
+}
+
+/* Los elementos con "sr-only" quedan disponibles para lectores de
+   pantalla pero no ocupan espacio visual (lo usa ThemeColorPicker). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Scrollbar */

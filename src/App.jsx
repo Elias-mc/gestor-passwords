@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import PasswordModal from './components/PasswordModal';
 import Sidebar from './components/Sidebar';
 import { initialPasswords } from './data/passwords';
+import { getAllPasswords, saveAllPasswords } from './lib/passwordsDb';
 import WinCategories from './windors/winCategories';
 import WinFavorites from './windors/winFavorites';
 import WinGenerator from './windors/winGenerator';
@@ -13,6 +14,60 @@ import WinSettings from './windors/winSettings';
 function App() {
   const [passwords, setPasswords] = useState(initialPasswords);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // ========================================
+  // PERSISTENCIA LOCAL (IndexedDB)
+  // ========================================
+  // "isLoaded" arranca en false para no mostrar ni por un instante los
+  // datos de ejemplo (initialPasswords) si el usuario ya tenía otras
+  // contraseñas guardadas: primero leemos la base local, y recién ahí
+  // mostramos la app (ver el "return" de carga, más abajo).
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getAllPasswords()
+      .then((stored) => {
+        if (cancelled) return;
+
+        if (stored.length > 0) {
+          setPasswords(stored);
+        } else {
+          // Primera vez que se abre la app en esta computadora: todavía
+          // no hay nada guardado, así que persistimos los datos de
+          // ejemplo iniciales para que quede algo guardado desde ya.
+          saveAllPasswords(initialPasswords).catch((error) => {
+            console.error('No se pudieron guardar los datos iniciales:', error);
+          });
+        }
+      })
+      .catch((error) => {
+        // Sin IndexedDB (navegador viejo, modo privado muy restrictivo)
+        // seguimos funcionando en memoria, simplemente sin persistencia.
+        console.error('No se pudo abrir la base de datos local:', error);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoaded(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // A partir de que terminó la carga inicial, cualquier cambio en
+  // "passwords" (agregar, editar, borrar, favorito, categoría, importar
+  // un pack sincronizado) se guarda solo. El guard de "isLoaded" evita
+  // que este efecto pise los datos reales con "initialPasswords" en el
+  // instante antes de que termine de cargar.
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    saveAllPasswords(passwords).catch((error) => {
+      console.error('No se pudieron guardar los cambios localmente:', error);
+    });
+  }, [passwords, isLoaded]);
 
   // ========================================
   // VISTA ACTIVA
@@ -196,6 +251,14 @@ function App() {
           />
         );
     }
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-background text-text-secondary transition-colors">
+        <p className="animate-pulse text-sm">Cargando tus contraseñas…</p>
+      </div>
+    );
   }
 
   return (

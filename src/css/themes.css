@@ -1,65 +1,37 @@
-:root {
-  --theme-background: #252422;
-  --theme-background-secundary: #403d39;
+:root[data-theme='theme-default'] {
+  --theme-background: #0b0b14;
+  --theme-background-secundary: #151522;
 
   --theme-button: #eb5e28;
-  --theme-button-hover: #c94b1d;
-  --theme-textButton: #fffcf2;
+  --theme-button-hover: #d94f1f;
+
+  --theme-textButton: #ffffff;
+
   --theme-button-border: #eb5e28;
-  --theme-button-border-hover: #c94b1d;
+  --theme-button-border-hover: #ff7840;
 
-  --theme-button-secundary: #403d39;
-  --theme-button-secundary-hover: #ccc5b9;
-  --theme-textButton-secundary: #252422;
+  --theme-button-secundary: #242435;
+  --theme-button-secundary-hover: #303044;
 
-  --theme-link: #ccc5b9;
-  --theme-link-hover: #eb5e28;
+  --theme-textButton-secundary: #f5f5f5;
 
-  --theme-text: #fffcf2;
-  --theme-text-secondary: #ccc5b9;
+  --theme-link: #eb5e28;
+  --theme-link-hover: #ff7840;
 
-  --theme-title: #fffcf2;
-  --theme-title-secondary: #eb5e28;
+  --theme-text: #ffffff;
+  --theme-text-secondary: #a1a1b5;
 
-  --theme-text-disabled: #8f8a82;
+  --theme-title: #ffffff;
+  --theme-title-secondary: #d4d4df;
 
-  --theme-border: #5a5650;
+  --theme-text-disabled: #666678;
+
+  --theme-border: #29293a;
 }
 
-.color-picker > fieldset {
-  border: 0;
-  display: flex;
-  gap: 2rem;
-  width: fit-content;
-  background: transparent;
-  padding: 1rem 3rem;
-  margin-inline: auto;
-  border-radius: 0 0 1rem 1rem;
-}
-.color-picker input[type='checkbox'] {
-}
-.color-picker input[type='radio'] {
-  appearance: none;
-  width: 1.5rem;
-  height: 1.5rem;
-  outline: 3px solid var(--radio-color, currentColor);
-  outline-offset: 3px;
-  border-radius: 50%;
-}
-
-.color-picker input[type='radio']:checked {
-  background-color: var(--radio-color);
-}
-.color-picker input[type='radio']#pink {
-  --radio-color: pink;
-}
-.color-picker input[type='radio']#red {
-  --radio-color: red;
-}
-
-:root:has(#pink:checked) {
+:root[data-theme='theme-verde'] {
   --theme-background: #132a13;
-  --theme-background-secundary: #2da01e;
+  --theme-background-secundary: #1d3b1d;
 
   --theme-button: #4f772d;
   --theme-button-hover: #90a955;
@@ -70,20 +42,310 @@
   --theme-button-border-hover: #90a955;
 
   --theme-button-secundary: #31572c;
-  --theme-button-secundary-hover: #90a955;
+  --theme-button-secundary-hover: #4f772d;
 
-  --theme-textButton-secundary: #132a13;
+  --theme-textButton-secundary: #ecf39e;
 
-  --theme-link: #ecf39e;
-  --theme-link-hover: #90a955;
+  --theme-link: #90a955;
+  --theme-link-hover: #ecf39e;
 
   --theme-text: #ecf39e;
-  --theme-text-secondary: #90a955;
+  --theme-text-secondary: #a7b98c;
 
   --theme-title: #ecf39e;
-  --theme-title-secondary: #90a955;
+  --theme-title-secondary: #c7d79a;
 
-  --theme-text-disabled: #4f772d;
+  --theme-text-disabled: #71835f;
 
   --theme-border: #31572c;
+}
+
+:root[data-theme='theme-rojo'] {
+  --theme-background: #2b1114;
+  --theme-background-secundary: #4a1e23;
+
+  --theme-button: #c1121f;
+  --theme-button-hover: #9d0f1a;
+
+  --theme-textButton: #fdf0d5;
+
+  --theme-button-border: #c1121f;
+  --theme-button-border-hover: #e01b2a;
+
+  --theme-button-secundary: #652830;
+  --theme-button-secundary-hover: #7f3039;
+
+  --theme-textButton-secundary: #fdf0d5;
+
+  --theme-link: #e01b2a;
+  --theme-link-hover: #ff4d5a;
+
+  --theme-text: #fdf0d5;
+  --theme-text-secondary: #d3aeb1;
+
+  --theme-title: #fdf0d5;
+  --theme-title-secondary: #e6c9c9;
+
+  --theme-text-disabled: #9b6e73;
+
+  --theme-border: #652830;
+}
+
+:root[data-theme='theme-blanco'] {
+  --theme-background: #ffffff;
+
+  --theme-background-secundary: #f5f5f5;
+
+  --theme-button: #000000;
+
+  --theme-button-hover: #262626;
+
+  --theme-textButton: #ffffff;
+
+  --theme-button-border: #000000;
+
+  --theme-button-border-hover: #262626;
+
+  --theme-button-secundary: #e5e5e5;
+
+  --theme-button-secundary-hover: #d4d4d4;
+
+  --theme-textButton-secundary: #000000;
+
+  --theme-link: #000000;
+
+  --theme-link-hover: #404040;
+
+  --theme-text: #171717;
+
+  --theme-text-secondary: #737373;
+
+  --theme-title: #000000;
+
+  --theme-title-secondary: #404040;
+
+  --theme-text-disabled: #a3a3a3;
+
+  --theme-border: #d4d4d4;
+}
+
+:root[data-theme='theme-negro'] {
+  --theme-background: #000000;
+  --theme-background-secundary: #0d0d0d;
+
+  --theme-button: #ffffff;
+  --theme-button-hover: #d4d4d4;
+
+  --theme-textButton: #000000;
+
+  --theme-button-border: #ffffff;
+  --theme-button-border-hover: #d4d4d4;
+
+  --theme-button-secundary: #1a1a1a;
+  --theme-button-secundary-hover: #262626;
+
+  --theme-textButton-secundary: #ffffff;
+
+  --theme-link: #ffffff;
+  --theme-link-hover: #d4d4d4;
+
+  --theme-text: #ffffff;
+  --theme-text-secondary: #a3a3a3;
+
+  --theme-title: #ffffff;
+  --theme-title-secondary: #d4d4d4;
+
+  --theme-text-disabled: #666666;
+
+  --theme-border: #292929;
+}
+:root[data-theme='theme-finn'] {
+  --theme-background: #eaf7ff;
+
+  --theme-background-secundary: #d8effb;
+
+  --theme-button: #2f80c9;
+
+  --theme-button-hover: #256da9;
+
+  --theme-textButton: #ffffff;
+
+  --theme-button-border: #2f80c9;
+
+  --theme-button-border-hover: #256da9;
+
+  --theme-button-secundary: #c7e7f5;
+
+  --theme-button-secundary-hover: #b2dced;
+
+  --theme-textButton-secundary: #183b52;
+
+  --theme-link: #2381c5;
+
+  --theme-link-hover: #17679f;
+
+  --theme-text: #183b52;
+
+  --theme-text-secondary: #527287;
+
+  --theme-title: #12344a;
+
+  --theme-title-secondary: #2d607c;
+
+  --theme-text-disabled: #8da9b8;
+
+  --theme-border: #afd4e5;
+}
+:root[data-theme='theme-azul'] {
+  --theme-background: #0b1220;
+
+  --theme-background-secundary: #111c2e;
+
+  --theme-button: #4f8cff;
+
+  --theme-button-hover: #6ba0ff;
+
+  --theme-textButton: #ffffff;
+
+  --theme-button-border: #4f8cff;
+
+  --theme-button-border-hover: #6ba0ff;
+
+  --theme-button-secundary: #1a2940;
+
+  --theme-button-secundary-hover: #243957;
+
+  --theme-textButton-secundary: #dbe7ff;
+
+  --theme-link: #72a7ff;
+
+  --theme-link-hover: #9ac0ff;
+
+  --theme-text: #e8eef8;
+
+  --theme-text-secondary: #9eacc1;
+
+  --theme-title: #f4f7fc;
+
+  --theme-title-secondary: #b9c7dc;
+
+  --theme-text-disabled: #65748a;
+
+  --theme-border: #263750;
+}
+
+.color-picker {
+  display: flex;
+  gap: 0.625rem;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.color-picker label {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.color-picker input[type='radio'] {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  outline: 2px solid var(--radio-color, currentColor);
+  outline-offset: 3px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    outline-offset 150ms ease;
+}
+
+.color-picker input[type='radio']:hover {
+  transform: scale(1.12);
+}
+
+.color-picker input[type='radio']:focus-visible {
+  outline-width: 3px;
+}
+
+.color-picker input[type='radio']:checked {
+  background-color: var(--radio-color);
+  outline-offset: 2px;
+  animation: icon-pop 180ms ease-out;
+}
+
+:root {
+  --theme-transition-duration: 780ms;
+}
+
+html.theme-changing::before {
+  content: '';
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+  pointer-events: none;
+
+  background: var(--theme-background);
+
+  opacity: 0;
+
+  transform: translateX(-110%);
+
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+
+  animation: theme-cover var(--theme-transition-duration) cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes theme-cover {
+  0% {
+    opacity: 0;
+    transform: translateX(-110%);
+
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+
+  10% {
+    opacity: 0.25;
+  }
+
+  25% {
+    opacity: 0.65;
+
+    clip-path: polygon(0 0, 25% 0, 18% 100%, 0 100%);
+  }
+
+  45% {
+    opacity: 0.9;
+
+    clip-path: polygon(0 0, 52% 0, 44% 100%, 0 100%);
+  }
+
+  65% {
+    opacity: 0.95;
+
+    clip-path: polygon(0 0, 76% 0, 68% 100%, 0 100%);
+  }
+
+  82% {
+    opacity: 0.7;
+
+    clip-path: polygon(0 0, 94% 0, 87% 100%, 0 100%);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: translateX(110%);
+
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-changing::before {
+    animation: none;
+    opacity: 0;
+  }
 }

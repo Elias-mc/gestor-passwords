@@ -2,3 +2,20 @@ __pycache__/
 *.pyc
 *.db
 .env
+# Node / frontend
+node_modules/
+dist/
+.vite/
+
+# Python / backend
+__pycache__/
+*.pyc
+*.db
+venv/
+.venv/
+
+# Entornos y misc
+.env
+.env.local
+.DS_Store
+*.log

@@ -1,66 +1,61 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 const CATEGORIES = [
-  "Desarrollo",
-  "Redes Sociales",
-  "Trabajo",
-  "Estudios",
-  "Finanzas",
-  "Entretenimiento",
-  "Juegos",
-  "Compras",
-  "Otros",
+  'Desarrollo',
+  'Redes Sociales',
+  'Trabajo',
+  'Estudios',
+  'Finanzas',
+  'Entretenimiento',
+  'Juegos',
+  'Compras',
+  'Otros',
 ];
 
 const CLIPBOARD_CLEAR_MS = 25000;
-const STRENGTH_LABEL = [
-  "Muy débil",
-  "Débil",
-  "Aceptable",
-  "Fuerte",
-  "Muy fuerte",
-];
 
-const STRENGTH_COLOR = [
-  "bg-red-500",
-  "bg-red-500",
-  "bg-amber-500",
-  "bg-emerald-500",
-  "bg-emerald-500",
-];
+const STRENGTH_LABEL = ['Muy débil', 'Débil', 'Aceptable', 'Fuerte', 'Muy fuerte'];
+
+const STRENGTH_COLOR = ['bg-danger', 'bg-danger', 'bg-warning', 'bg-success', 'bg-success'];
 
 function formFrom(password) {
   return {
-    name: password?.name || "",
-    categoria: password?.categoria || "",
-    correo: password?.correo || "",
-    contrasena: password?.contrasena || "",
-    url: password?.url || "",
-    icono: password?.icono || "",
+    name: password?.name || '',
+    categoria: password?.categoria || '',
+    correo: password?.correo || '',
+    contrasena: password?.contrasena || '',
+    url: password?.url || '',
+    icono: password?.icono || '',
   };
 }
 
 function normalizeUrl(value) {
-  if (!value) return "";
+  if (!value) return '';
+
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 }
 
 function generatePassword(length = 16) {
-  const chars =
-    "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
+
   const values = new Uint32Array(length);
+
   window.crypto.getRandomValues(values);
-  return Array.from(values, (v) => chars[v % chars.length]).join("");
+
+  return Array.from(values, (value) => chars[value % chars.length]).join('');
 }
 
 function passwordStrength(value) {
   if (!value) return 0;
+
   let score = 0;
+
   if (value.length >= 8) score++;
   if (value.length >= 14) score++;
   if (/[a-z]/.test(value) && /[A-Z]/.test(value)) score++;
   if (/\d/.test(value)) score++;
   if (/[^A-Za-z0-9]/.test(value)) score++;
+
   return Math.min(score, 4);
 }
 
@@ -72,54 +67,131 @@ function CopyIcon() {
       height="16"
       fill="currentColor"
       viewBox="0 0 16 16"
+      aria-hidden="true"
     >
       <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm5 10v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2v5a2 2 0 0 1-2 2z" />
     </svg>
   );
 }
 
-const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500";
+function EyeIcon({ hidden = false }) {
+  if (hidden) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="17"
+        height="17"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        aria-hidden="true"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M3 3l18 18M10.58 10.58a2 2 0 102.83 2.83M9.88 4.24A10.45 10.45 0 0112 4c5.5 0 9.5 4 10.5 8a11.5 11.5 0 01-3.07 4.83M6.61 6.61C4.85 7.75 3.64 9.42 1.5 12c1 4 5 8 10.5 8 1.17 0 2.26-.18 3.25-.5"
+        />
+      </svg>
+    );
+  }
 
-// Clase compartida por los botones "cáscara" (borde + hover), que se
-// repite en Volver, mostrar/ocultar, copiar, generar y cancelar. Ya trae
-// "transition" (color + fondo) desde donde se usa.
-const ghostButton =
-  "border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white";
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="17"
+      height="17"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"
+      />
+      <circle cx="12" cy="12" r="2.5" />
+    </svg>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
+  );
+}
+
+function StarIcon({ filled = false }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill={filled ? 'currentColor' : 'none'}
+      stroke="currentColor"
+      strokeWidth="1.8"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 3.5l2.63 5.33 5.88.85-4.25 4.14 1 5.85L12 16.9l-5.26 2.77 1-5.85-4.25-4.14 5.88-.85L12 3.5z"
+      />
+    </svg>
+  );
+}
 
 function WinModulePassword({ password, onBack, onEdit, onDelete }) {
   const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState(() => formFrom(password));
   const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState("");
+  const [saveError, setSaveError] = useState('');
   const [confirmingDelete, setConfirmingDelete] = useState(false);
-  const [copied, setCopied] = useState(null); // "correo" | "contrasena" | null
+  const [copied, setCopied] = useState(null);
+
   const clipboardTimer = useRef(null);
 
-  // Cada vez que cambia la entrada seleccionada (el usuario clickeó otra
-  // fila de la lista), reseteamos todo el estado local. Sin esto, si
-  // estabas editando una contraseña y elegías otra desde la lista,
-  // quedabas "editando" la entrada nueva con los datos de la vieja.
   useEffect(() => {
     setForm(formFrom(password));
     setIsEditing(false);
     setShowPassword(false);
     setConfirmingDelete(false);
-    setSaveError("");
+    setSaveError('');
+    setCopied(null);
   }, [password?.id]);
 
-  useEffect(() => () => clearTimeout(clipboardTimer.current), []);
+  useEffect(() => {
+    return () => clearTimeout(clipboardTimer.current);
+  }, []);
 
   if (!password) {
     return (
-      <main className="flex flex-1 items-center justify-center bg-slate-50 transition-colors duration-300 dark:bg-[#070d1a]">
-        <div className="text-center">
-          <div className="mb-4 text-5xl">🔐</div>
-          <h2 className="text-xl font-semibold text-slate-900 transition-colors duration-300 dark:text-white">
+      <main className="flex min-h-0 flex-1 items-center justify-center bg-background px-6 transition-colors duration-300">
+        <div className="max-w-sm text-center">
+          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-background-secundary text-2xl">
+            🔐
+          </div>
+
+          <h2 className="text-xl font-semibold text-title">
             No hay ninguna contraseña seleccionada
           </h2>
-          <p className="mt-2 text-sm text-slate-500">
+
+          <p className="mt-2 text-sm leading-6 text-text-secondary">
             Seleccioná una contraseña para ver sus datos.
           </p>
         </div>
@@ -128,29 +200,35 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
   }
 
   function updateField(field, value) {
-    setForm((current) => ({ ...current, [field]: value }));
+    setForm((current) => ({
+      ...current,
+      [field]: value,
+    }));
   }
 
   function handleStartEdit() {
     setForm(formFrom(password));
-    setSaveError("");
+    setSaveError('');
     setIsEditing(true);
   }
 
   function handleCancelEdit() {
     setForm(formFrom(password));
-    setSaveError("");
+    setSaveError('');
     setIsEditing(false);
   }
 
   async function handleSave(event) {
     event?.preventDefault();
+
     if (!form.name.trim()) {
-      setSaveError("Ponele un nombre a la cuenta antes de guardar.");
+      setSaveError('Ponéle un nombre a la cuenta antes de guardar.');
       return;
     }
+
     setSaving(true);
-    setSaveError("");
+    setSaveError('');
+
     try {
       await onEdit({
         ...password,
@@ -161,98 +239,114 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
         url: normalizeUrl(form.url.trim()),
         icono: form.icono.trim(),
       });
+
       setIsEditing(false);
     } catch {
-      setSaveError("No se pudo guardar. Probá de nuevo.");
+      setSaveError('No se pudo guardar. Probá de nuevo.');
     } finally {
       setSaving(false);
     }
   }
 
   function handleGenerate() {
-    updateField("contrasena", generatePassword());
+    updateField('contrasena', generatePassword());
     setShowPassword(true);
   }
 
   function toggleFavorite() {
-    onEdit({ ...password, favorito: !password.favorito });
+    onEdit({
+      ...password,
+      favorito: !password.favorito,
+    });
   }
 
   async function copyValue(field, value) {
     if (!value) return;
-    await navigator.clipboard.writeText(value);
-    setCopied(field);
-    clearTimeout(clipboardTimer.current);
-    clipboardTimer.current = setTimeout(async () => {
-      setCopied(null);
-      try {
-        // Solo borramos el portapapeles si todavía tiene lo que copiamos;
-        // si el usuario ya copió otra cosa mientras tanto, no la pisamos.
-        const current = await navigator.clipboard.readText();
-        if (current === value) await navigator.clipboard.writeText("");
-      } catch {
-        // Sin permiso de lectura del portapapeles: lo dejamos como está.
-      }
-    }, CLIPBOARD_CLEAR_MS);
+
+    try {
+      await navigator.clipboard.writeText(value);
+
+      setCopied(field);
+
+      clearTimeout(clipboardTimer.current);
+
+      clipboardTimer.current = setTimeout(async () => {
+        setCopied(null);
+
+        try {
+          const current = await navigator.clipboard.readText();
+
+          if (current === value) {
+            await navigator.clipboard.writeText('');
+          }
+        } catch {
+          // Algunos navegadores bloquean la lectura del portapapeles.
+        }
+      }, CLIPBOARD_CLEAR_MS);
+    } catch {
+      setSaveError('No se pudo copiar al portapapeles.');
+    }
   }
 
   const strength = passwordStrength(form.contrasena);
 
+  const inputClass =
+    'w-full rounded-xl border border-button-border bg-background px-4 py-3 text-sm text-text outline-none transition-all duration-200 placeholder:text-text-secondary focus:border-button focus:ring-2 focus:ring-button/15';
+
+  const ghostButton =
+    'border-border bg-transparent text-text-secondary hover:border-button-border-hover hover:bg-button-secundary hover:text-text';
+
+  const focusRing =
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-button focus-visible:ring-offset-2 focus-visible:ring-offset-background-secundary';
+
   return (
-    <main className="flex-1 overflow-y-auto bg-slate-50 transition-colors duration-300 dark:bg-[#070d1a]">
-      <div className="mx-auto max-w-5xl p-8">
+    <main className="min-h-0 flex-1 overflow-y-auto bg-background transition-colors duration-300">
+      <div className="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+        {/* Navegación */}
         <button
           type="button"
           onClick={onBack}
-          className={`mb-8 flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${ghostButton} ${focusRing}`}
+          className={`mb-6 inline-flex items-center gap-2 rounded-xl border px-3.5 py-2.5 text-sm font-medium transition-all duration-200 sm:mb-8 ${ghostButton} ${focusRing}`}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8"
-            />
-          </svg>
+          <ArrowLeftIcon />
           <span>Volver</span>
         </button>
 
-        <header className="mb-8 flex items-start justify-between gap-4">
-          <div className="flex items-center gap-5">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 transition-colors duration-300 dark:border-white/10 dark:bg-white/5">
+        {/* Cabecera */}
+        <header className="mb-6 flex flex-col gap-5 sm:mb-8 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex min-w-0 items-center gap-4 sm:gap-5">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border bg-background-secundary sm:h-16 sm:w-16">
               {isEditing ? (
                 <input
                   type="url"
                   value={form.icono}
-                  onChange={(e) => updateField("icono", e.target.value)}
-                  placeholder="URL del icono"
-                  className="w-full bg-transparent px-2 text-xs text-slate-900 outline-none transition-colors duration-300 dark:text-white"
+                  onChange={(event) => updateField('icono', event.target.value)}
+                  placeholder="URL"
+                  aria-label="URL del icono"
+                  className="w-full bg-transparent px-2 text-center text-xs text-text outline-none placeholder:text-text-secondary"
                 />
               ) : password.icono ? (
                 <img
                   src={password.icono}
                   alt=""
-                  className="h-10 w-10 object-contain"
+                  className="h-10 w-10 object-contain sm:h-11 sm:w-11"
                 />
               ) : (
                 <span className="text-2xl">🔐</span>
               )}
             </div>
 
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               {isEditing ? (
                 <input
                   type="text"
                   value={form.name}
-                  onChange={(e) => updateField("name", e.target.value)}
-                  className="w-full max-w-md rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 text-2xl font-bold text-slate-900 outline-none transition-colors duration-200 focus:border-violet-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  onChange={(event) => updateField('name', event.target.value)}
+                  aria-label="Nombre de la cuenta"
+                  className={`${inputClass} max-w-md px-3 py-2.5 text-xl font-bold sm:text-2xl`}
                 />
               ) : (
-                <h1 className="text-3xl font-bold text-slate-900 transition-colors duration-300 dark:text-white">
+                <h1 className="break-words text-2xl font-bold tracking-tight text-title sm:text-3xl">
                   {password.name}
                 </h1>
               )}
@@ -260,10 +354,12 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
               {isEditing ? (
                 <select
                   value={form.categoria}
-                  onChange={(e) => updateField("categoria", e.target.value)}
-                  className="mt-2 cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition-colors duration-200 focus:border-violet-500 dark:border-white/10 dark:bg-[#0b1220] dark:text-white"
+                  onChange={(event) => updateField('categoria', event.target.value)}
+                  aria-label="Categoría"
+                  className={`${inputClass} mt-2 max-w-xs cursor-pointer py-2.5`}
                 >
                   <option value="">Seleccioná una categoría</option>
+
                   {CATEGORIES.map((item) => (
                     <option key={item} value={item}>
                       {item}
@@ -271,8 +367,8 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
                   ))}
                 </select>
               ) : (
-                <span className="mt-2 inline-flex rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-600 transition-colors duration-300 dark:text-violet-400">
-                  {password.categoria || "Sin categoría"}
+                <span className="mt-2 inline-flex rounded-full border border-button-border bg-button-secundary px-3 py-1 text-xs font-medium text-textButton-secundary">
+                  {password.categoria || 'Sin categoría'}
                 </span>
               )}
             </div>
@@ -282,53 +378,49 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
             <button
               type="button"
               onClick={toggleFavorite}
-              title={
-                password.favorito
-                  ? "Quitar de favoritos"
-                  : "Marcar como favorito"
-              }
+              title={password.favorito ? 'Quitar de favoritos' : 'Marcar como favorito'}
+              aria-label={password.favorito ? 'Quitar de favoritos' : 'Marcar como favorito'}
               aria-pressed={Boolean(password.favorito)}
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border text-lg transition ${focusRing} ${
-                password.favorito
-                  ? "border-amber-400/30 bg-amber-400/10 text-amber-400"
-                  : ghostButton
-              }`}
+              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-200 ${
+                password.favorito ? 'border-button bg-button text-textButton' : ghostButton
+              } ${focusRing}`}
             >
-              ★
+              <StarIcon filled={Boolean(password.favorito)} />
             </button>
           )}
         </header>
 
-        <section className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors duration-300 dark:divide-white/10 dark:border-white/10 dark:bg-[#0b1220]">
-          <div className="p-6">
-            <h2 className="text-sm font-medium text-slate-500 transition-colors duration-300 dark:text-slate-400">
-              Usuario o correo
-            </h2>
+        {/* Información */}
+        <section className="overflow-hidden rounded-2xl border border-border bg-background-secundary shadow-sm transition-colors duration-300">
+          {/* Correo */}
+          <div className="border-b border-border p-5 sm:p-6">
+            <h2 className="text-sm font-medium text-text-secondary">Usuario o correo</h2>
+
             {isEditing ? (
               <input
                 type="text"
                 value={form.correo}
-                onChange={(e) => updateField("correo", e.target.value)}
+                onChange={(event) => updateField('correo', event.target.value)}
                 placeholder="usuario@example.com"
-                className="mt-3 w-full rounded-lg border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-900 outline-none transition-colors duration-200 placeholder:text-slate-400 focus:border-violet-500 dark:border-white/10 dark:bg-black/20 dark:text-white dark:placeholder:text-slate-600"
+                autoComplete="username"
+                className={`${inputClass} mt-3`}
               />
             ) : (
-              <div className="mt-2 flex items-center justify-between gap-4">
-                <span className="min-w-0 flex-1 break-all text-sm text-slate-600 transition-colors duration-300 dark:text-zinc-400">
-                  {password.correo || "No especificado"}
+              <div className="mt-3 flex items-center gap-3">
+                <span className="min-w-0 flex-1 break-all text-sm text-text">
+                  {password.correo || <span className="text-text-secondary">No especificado</span>}
                 </span>
+
                 {password.correo && (
                   <button
                     type="button"
-                    onClick={() => copyValue("correo", password.correo)}
+                    onClick={() => copyValue('correo', password.correo)}
                     title="Copiar usuario o correo"
                     aria-label="Copiar usuario o correo"
-                    className={`flex shrink-0 items-center justify-center rounded-lg border px-3 py-2 transition ${ghostButton} ${focusRing}`}
+                    className={`flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl border px-3 transition-all duration-200 ${ghostButton} ${focusRing}`}
                   >
-                    {copied === "correo" ? (
-                      <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
-                        Copiado
-                      </span>
+                    {copied === 'correo' ? (
+                      <span className="text-xs font-medium text-text">Copiado</span>
                     ) : (
                       <CopyIcon />
                     )}
@@ -338,186 +430,185 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
             )}
           </div>
 
-          <div className="p-6">
-            <h2 className="mb-3 text-sm font-medium text-slate-500 transition-colors duration-300 dark:text-slate-400">
-              Contraseña
-            </h2>
+          {/* Contraseña */}
+          <div className="border-b border-border p-5 sm:p-6">
+            <h2 className="mb-3 text-sm font-medium text-text-secondary">Contraseña</h2>
+
             {isEditing ? (
               <>
-                <div className="flex items-center gap-3">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={form.contrasena}
-                    onChange={(e) => updateField("contrasena", e.target.value)}
-                    className="min-h-11 flex-1 rounded-lg border border-slate-200 bg-slate-100 px-4 text-sm text-slate-900 outline-none transition-colors duration-200 focus:border-violet-500 dark:border-white/10 dark:bg-black/20 dark:text-white"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((c) => !c)}
-                    title={
-                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                    }
-                    aria-label={
-                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                    }
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition ${ghostButton} ${focusRing}`}
-                  >
-                    {showPassword ? "🙈" : "👁"}
-                  </button>
+                <div className="flex flex-col gap-2.5 sm:flex-row">
+                  <div className="flex min-w-0 flex-1 gap-2.5">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={form.contrasena}
+                      onChange={(event) => updateField('contrasena', event.target.value)}
+                      autoComplete="new-password"
+                      className={`${inputClass} min-h-11`}
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((current) => !current)}
+                      title={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                      aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${ghostButton} ${focusRing}`}
+                    >
+                      <EyeIcon hidden={showPassword} />
+                    </button>
+                  </div>
+
                   <button
                     type="button"
                     onClick={handleGenerate}
-                    className={`whitespace-nowrap rounded-lg border px-3 py-2.5 text-xs font-medium transition ${ghostButton} ${focusRing}`}
+                    className={`min-h-11 rounded-xl border px-4 text-sm font-medium transition-all duration-200 ${ghostButton} ${focusRing}`}
                   >
                     Generar
                   </button>
                 </div>
 
                 {form.contrasena && (
-                  <div className="mt-3">
+                  <div className="mt-4">
                     <div className="flex h-1.5 gap-1">
-                      {[0, 1, 2, 3].map((i) => (
+                      {[0, 1, 2, 3].map((index) => (
                         <div
-                          key={i}
+                          key={index}
                           className={`flex-1 rounded-full transition-colors duration-300 ${
-                            i < strength
-                              ? STRENGTH_COLOR[strength]
-                              : "bg-slate-200 dark:bg-white/10"
+                            index < strength ? STRENGTH_COLOR[strength] : 'bg-border'
                           }`}
                         />
                       ))}
                     </div>
-                    <p className="mt-1.5 text-xs text-slate-500">
-                      {STRENGTH_LABEL[strength]}
+
+                    <p className="mt-2 text-xs text-text-secondary">
+                      Seguridad:{' '}
+                      <span className="font-medium text-text">{STRENGTH_LABEL[strength]}</span>
                     </p>
                   </div>
                 )}
               </>
             ) : (
               <>
-                <div className="flex items-center gap-3">
-                  <div className="flex min-h-11 flex-1 items-center rounded-lg border border-slate-200 bg-slate-100 px-4 transition-colors duration-300 dark:border-white/10 dark:bg-black/20">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex min-h-11 min-w-0 flex-1 items-center overflow-hidden rounded-xl border border-border bg-background px-4">
                     {showPassword ? (
-                      <span className="break-all text-sm text-slate-900 transition-colors duration-300 dark:text-white">
-                        {password.contrasena}
-                      </span>
+                      <span className="break-all text-sm text-text">{password.contrasena}</span>
                     ) : (
-                      <span className="text-sm tracking-[0.3em] text-slate-500">
+                      <span className="truncate text-sm tracking-[0.3em] text-text-secondary">
                         ••••••••••••
                       </span>
                     )}
                   </div>
+
                   <button
                     type="button"
-                    title={
-                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                    }
-                    aria-label={
-                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                    }
-                    onClick={() => setShowPassword((c) => !c)}
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition ${ghostButton} ${focusRing}`}
+                    title={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                    aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                    onClick={() => setShowPassword((current) => !current)}
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${ghostButton} ${focusRing}`}
                   >
-                    {showPassword ? "🙈" : "👁"}
+                    <EyeIcon hidden={showPassword} />
                   </button>
+
                   <button
                     type="button"
-                    onClick={() => copyValue("contrasena", password.contrasena)}
+                    onClick={() => copyValue('contrasena', password.contrasena)}
                     title="Copiar contraseña"
                     aria-label="Copiar contraseña"
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition ${ghostButton} ${focusRing}`}
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${ghostButton} ${focusRing}`}
                   >
-                    {copied === "contrasena" ? (
-                      <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                        ✓
-                      </span>
+                    {copied === 'contrasena' ? (
+                      <span className="text-sm font-semibold text-text">✓</span>
                     ) : (
                       <CopyIcon />
                     )}
                   </button>
                 </div>
-                {copied === "contrasena" && (
-                  <p className="mt-2 text-xs text-slate-500">
-                    Copiada. Se borra sola del portapapeles en{" "}
-                    {CLIPBOARD_CLEAR_MS / 1000} segundos.
+
+                {copied === 'contrasena' && (
+                  <p className="mt-2 text-xs leading-5 text-text-secondary">
+                    Copiada. Se borra sola del portapapeles en {CLIPBOARD_CLEAR_MS / 1000} segundos.
                   </p>
                 )}
               </>
             )}
           </div>
 
-          <div className="p-6">
-            <h2 className="mb-3 text-sm font-medium text-slate-500 transition-colors duration-300 dark:text-slate-400">
-              URL
-            </h2>
+          {/* URL */}
+          <div className="p-5 sm:p-6">
+            <h2 className="mb-3 text-sm font-medium text-text-secondary">Sitio web</h2>
+
             {isEditing ? (
               <input
                 type="url"
                 value={form.url}
-                onChange={(e) => updateField("url", e.target.value)}
+                onChange={(event) => updateField('url', event.target.value)}
                 placeholder="https://github.com"
-                className="w-full rounded-lg border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-900 outline-none transition-colors duration-200 placeholder:text-slate-400 focus:border-violet-500 dark:border-white/10 dark:bg-black/20 dark:text-white dark:placeholder:text-slate-600"
+                autoComplete="url"
+                className={inputClass}
               />
             ) : password.url ? (
               <a
                 href={password.url}
                 target="_blank"
                 rel="noreferrer"
-                className={`rounded break-all text-sm text-violet-600 transition hover:text-violet-500 hover:underline dark:text-violet-400 dark:hover:text-violet-300 ${focusRing}`}
+                className={`inline-block max-w-full break-all rounded text-sm font-medium text-text underline-offset-4 transition hover:text-title hover:underline ${focusRing}`}
               >
                 {password.url}
               </a>
             ) : (
-              <span className="text-sm text-slate-500">No especificada</span>
+              <span className="text-sm text-text-secondary">No especificada</span>
             )}
           </div>
         </section>
 
+        {/* Error */}
         {saveError && (
-          <p
-            className="mt-4 text-sm text-red-600 transition-colors duration-300 dark:text-red-400"
+          <div
+            className="mt-4 rounded-xl border border-danger bg-danger/10 px-4 py-3 text-sm text-danger"
             aria-live="polite"
           >
             {saveError}
-          </p>
+          </div>
         )}
 
-        <div className="mt-6 flex items-center justify-end gap-3">
+        {/* Acciones */}
+        <div className="mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row sm:items-center sm:justify-end">
           {isEditing ? (
             <>
               <button
                 type="button"
                 onClick={handleCancelEdit}
                 disabled={saving}
-                className={`rounded-lg border px-5 py-2.5 text-sm font-medium transition disabled:opacity-50 ${ghostButton} ${focusRing}`}
+                className={`order-2 rounded-xl border px-5 py-2.5 text-sm font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 sm:order-1 ${ghostButton} ${focusRing}`}
               >
                 Cancelar
               </button>
+
               <button
                 type="button"
                 onClick={handleSave}
                 disabled={saving}
-                className={`rounded-lg bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition hover:bg-violet-500 disabled:opacity-60 ${focusRing}`}
+                className={`order-1 rounded-xl bg-button px-5 py-2.5 text-sm font-semibold text-textButton shadow-sm transition-all duration-200 hover:bg-button-hover disabled:cursor-not-allowed disabled:opacity-60 sm:order-2 ${focusRing}`}
               >
-                {saving ? "Guardando…" : "Guardar cambios"}
+                {saving ? 'Guardando…' : 'Guardar cambios'}
               </button>
             </>
           ) : confirmingDelete ? (
             <>
-              <span className="mr-1 text-sm text-slate-500 transition-colors duration-300 dark:text-slate-400">
-                ¿Eliminar esta contraseña?
-              </span>
+              <div className="mr-auto text-sm text-text-secondary">¿Eliminar esta contraseña?</div>
+
               <button
                 type="button"
                 onClick={() => setConfirmingDelete(false)}
-                className={`rounded-lg border px-5 py-2.5 text-sm font-medium transition ${ghostButton} ${focusRing}`}
+                className={`rounded-xl border px-5 py-2.5 text-sm font-medium transition-all duration-200 ${ghostButton} ${focusRing}`}
               >
                 Cancelar
               </button>
+
               <button
                 type="button"
                 onClick={() => onDelete(password.id)}
-                className={`rounded-lg bg-red-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-400 ${focusRing}`}
+                className={`rounded-xl bg-danger px-5 py-2.5 text-sm font-semibold text-danger-foreground transition-all duration-200 hover:bg-danger-hover ${focusRing}`}
               >
                 Sí, eliminar
               </button>
@@ -527,14 +618,15 @@ function WinModulePassword({ password, onBack, onEdit, onDelete }) {
               <button
                 type="button"
                 onClick={handleStartEdit}
-                className={`rounded-lg border px-5 py-2.5 text-sm font-medium transition ${ghostButton} ${focusRing}`}
+                className={`rounded-xl border px-5 py-2.5 text-sm font-medium transition-all duration-200 ${ghostButton} ${focusRing}`}
               >
                 Editar
               </button>
+
               <button
                 type="button"
                 onClick={() => setConfirmingDelete(true)}
-                className={`rounded-lg bg-red-500/10 px-5 py-2.5 text-sm font-medium text-red-600 transition hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 ${focusRing}`}
+                className={`rounded-xl border border-danger bg-danger/10 px-5 py-2.5 text-sm font-medium text-danger transition-all duration-200 hover:bg-danger hover:text-danger-foreground ${focusRing}`}
               >
                 Eliminar
               </button>

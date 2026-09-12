@@ -21,7 +21,7 @@ function WinPassword({ passwords, onAdd, onSelectPassword, onFavorite, onCategor
   }, [passwords, search]);
 
   return (
-    <main className="flex-1 overflow-y-auto bg-background">
+    <main className="flex-1 animate-page-enter overflow-y-auto bg-background">
       <div className="mx-auto max-w-6xl p-8">
         <header className="mb-8">
           <h2 className="text-4xl max-sm:text-2xl font-bold tracking-tight text-title">
@@ -36,8 +36,8 @@ function WinPassword({ passwords, onAdd, onSelectPassword, onFavorite, onCategor
         <div className="mb-6 flex gap-3">
           {/* BUSCADOR */}
 
-          <div className="relative flex-1">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-disabled">
+          <div className="group relative flex-1">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-disabled transition-colors duration-200 group-focus-within:text-button">
               <IconSearch />
             </span>
 
@@ -71,6 +71,7 @@ function WinPassword({ passwords, onAdd, onSelectPassword, onFavorite, onCategor
             type="button"
             onClick={onAdd}
             className="
+              group
               flex items-center gap-2
               rounded-lg
               border border-button-border
@@ -85,13 +86,14 @@ function WinPassword({ passwords, onAdd, onSelectPassword, onFavorite, onCategor
               transition-all
               duration-200
 
+              hover:scale-[1.03]
               hover:border-button-border-hover
               hover:bg-button-hover
 
               active:scale-95
             "
           >
-            <span className=" leading-none">
+            <span className="leading-none transition-transform duration-200 group-hover:rotate-90">
               <IconPlus />
             </span>
 
