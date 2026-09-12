@@ -95,8 +95,8 @@ Mientras no haya una release publicada, seguí los pasos de **["Poner el proyect
 Esto lo hice a pulmón, con café, música y algún que otro `console.log` que se me olvidó borrar (si encontraste uno, hacé de cuenta que no). Si esta app te salvó de perder una contraseña o simplemente te cayó simpática, podés invitarme un café acá:
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/tu-usuario">
-    <img src="https://img.shields.io/badge/☕%20Invitame%20un%20cafecito-donar-ffdd00?style=for-the-badge" alt="Invitame un cafecito">
+  <a href="https://cafecito.app/elias_mk">
+    <img src="https://chatgpt.com/backend-api/estuary/content?id=file_00000000a288820e98599de70ce1e076&ts=497004&p=fs&cid=1&sig=d7bea4bcd2683a1aad93b37e5fc90f5e6835469a761f71c11ca88d50c59ee860&v=0" alt="Invitame un cafecito">
   </a>
 </p>
 
