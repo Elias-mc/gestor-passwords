@@ -8,6 +8,9 @@
     "electron:dev": "concurrently -k \"npm:dev\" \"wait-on tcp:5173 && cross-env ELECTRON_RENDERER_URL=http://localhost:5173 electron electron/main.cjs\"",
     "electron:preview": "npm run build && electron electron/main.cjs",
     "electron:build": "npm run build && electron-builder",
+    "electron:download:linux": "bash scripts/build-download.sh linux",
+    "electron:download:windows": "bash scripts/build-download.sh windows",
+    "electron:download:macos": "bash scripts/build-download.sh macos",
     "dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
     "build": "vite build",
     "preview": "vite preview"
@@ -32,6 +35,7 @@
     "linux": {
       "target": [
         "AppImage",
+        "zip",
         "deb"
       ],
       "category": "Utility",
@@ -55,6 +59,7 @@
     "concurrently": "^10.0.5",
     "cross-env": "^10.1.0",
     "electron": "^44.3.0",
+    "electron-builder": "^26.15.3",
     "vite": "^7.3.6",
     "wait-on": "^8.0.4"
   }

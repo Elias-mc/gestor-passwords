@@ -30,4 +30,5 @@ dist/
 .env.*
 
 release/
+downloads/*.zip
 node_modules/
