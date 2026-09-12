@@ -1,105 +1,132 @@
 # Gestor de Contraseñas
 
+Aplicación de escritorio multiplataforma para guardar, organizar y generar
+contraseñas. Los datos se almacenan localmente en el dispositivo. La
+sincronización entre equipos es opcional y cifra el contenido antes de
+enviarlo al servidor.
 
+## Descargar y abrir
 
-Una app de escritorio para guardar tus contraseñas sin depender de la memoria (la tuya, no la de la compu — esa la usamos igual). Corre en Windows, Mac y Linux, no manda absolutamente nada a ningún servidor propio, y viene con un generador de claves, categorías, favoritos y un cambio de tema que, sinceramente, se luce más de lo que un gestor de contraseñas necesita lucirse.
+Las versiones listas para usar se publican en
+[Releases](https://github.com/Elias-mc/gestor-passwords/releases).
 
-> Porque "123456" no es una contraseña, es un grito de auxilio.
-<p align="center">
-  <img alt="Licencia" src="https://img.shields.io/badge/licencia-ISC-8a2be2?style=flat-square">
-  <img alt="Hecho con" src="https://img.shields.io/badge/hecho%20con-React%20%2B%20Electron-61dafb?style=flat-square">
-  <img alt="Plataformas" src="https://img.shields.io/badge/plataformas-Windows%20%7C%20macOS%20%7C%20Linux-informational?style=flat-square">
-  <img alt="Café requerido" src="https://img.shields.io/badge/café%20requerido-sí-6f4e37?style=flat-square">
-</p>
+### Linux
 
----
+1. Descargá el archivo `.AppImage` desde la última versión.
+2. Dale permiso de ejecución:
 
-## 🤔 ¿Y esto para qué sirve?
+   ```bash
+   chmod +x Gestor-*.AppImage
+   ```
 
-Para dejar de anotar contraseñas en un post-it, en las Notas del celular, o en un Word que se llama "no borrar.docx". Guardás tus cuentas, las organizás, generás claves que no son tu fecha de cumpleaños, y listo.
+3. Abrilo con doble clic o ejecutalo:
 
-No hay cuentas, no hay login, no hay "aceptás nuestros términos y condiciones de 40 páginas". Es una app local: lo que guardás, se queda en tu compu.
+   ```bash
+   ./Gestor-*.AppImage
+   ```
 
-## ✨ Características
+No requiere instalación. Si preferís descargar un `.zip`, descomprimilo y
+ejecutá el archivo `.AppImage` que contiene.
 
-- 🔑 **Generador de contraseñas** con largo ajustable y control fino de mayúsculas, minúsculas, números y símbolos — para cuando "Pass123!" ya no te alcanza.
-- ⭐ **Favoritos y categorías** para no scrollear cinco años buscando la del banco.
-- 🎨 **Temas de color** (oscuro, claro, y un par de paletas más) con una transición de cambio de tema animada que nadie te pidió pero que igual quedó espectacular.
-- 🔄 **Sincronización entre dispositivos** cifrada, con un código + una frase de seguridad — sin cuentas, sin login, sin que nadie salvo vos tenga la llave.
-- 🖥️ **Multiplataforma real**: un mismo proyecto, instaladores para Windows, macOS y Linux.
+### Windows
 
-## 🛠️ Con qué está hecho
+Descargá el instalador `.exe`, ejecutalo y seguí el asistente de instalación.
 
-- [React 19](https://react.dev/)
-- [Vite](https://vite.dev/)
-- [Tailwind CSS v4](https://tailwindcss.com/)
-- [Electron](https://www.electronjs.org/) (lo que la convierte en app de escritorio de verdad, no una web con delirios de grandeza)
+### macOS
 
-## 🚀 Poner el proyecto a andar
+Descargá el archivo `.dmg`, abrilo y arrastrá la aplicación a `Applications`.
 
-Necesitás tener [Node.js](https://nodejs.org/) instalado. Después:
+> Descargá archivos únicamente desde las Releases oficiales del repositorio.
+
+## Funciones
+
+- Generador de contraseñas con longitud y tipos de caracteres configurables.
+- Organización por categorías y favoritos.
+- Temas de interfaz.
+- Persistencia local mediante IndexedDB.
+- Sincronización opcional entre dispositivos mediante packs cifrados,
+  código temporal y frase de seguridad.
+
+## Desarrollo
+
+Requisitos:
+
+- Node.js 20 o superior.
+- Python 3.11 o superior, únicamente si se utiliza la sincronización.
+
+### Aplicación de escritorio
 
 ```bash
-# Clonar el repo
-git clone https://github.com/Elias-mc/gestor-passwords
+git clone https://github.com/Elias-mc/gestor-passwords.git
 cd gestor-passwords
-
-# Instalar dependencias
 npm install
-
-# Modo desarrollo (con recarga en caliente)
 npm run electron:dev
 ```
 
-Otros comandos útiles:
+Para abrir una vista previa compilada:
 
-| Comando                    | Qué hace                                            |
-| -------------------------- | --------------------------------------------------- |
-| `npm run dev`              | Levanta solo el front (Vite), sin Electron          |
-| `npm run electron:preview` | Compila y abre la app de escritorio, sin instalarla |
-| `npm run electron:build`   | Genera los instaladores finales (ver abajo)         |
+```bash
+npm run electron:preview
+```
 
-## 📦 Compilar tu propio instalador
+### Generar descargas
+
+Linux:
+
+```bash
+npm run electron:build:linux
+```
+
+Los archivos se generan en `release/`:
+
+- `.AppImage`: archivo único, portable y recomendado para Linux.
+- `.zip`: versión comprimida para distribuir o guardar.
+- `.deb`: paquete para distribuciones basadas en Debian/Ubuntu.
+
+Para generar los instaladores de la plataforma actual:
 
 ```bash
 npm run electron:build
 ```
 
-Esto te deja los instaladores listos en la carpeta `release/`:
+El empaquetado para Windows y macOS debe ejecutarse preferentemente en su
+respectivo sistema operativo.
 
-- **Windows** → `.exe` (NSIS)
-- **macOS** → `.dmg`
-- **Linux** → `.AppImage` y `.deb`
+## Sincronización opcional
 
-## 🔒 Sobre la seguridad
+El servidor de sincronización está en
+[`src/password-pack-backend/`](./src/password-pack-backend/). Para iniciarlo:
 
-Esta app no tiene backend propio ni base de datos en la nube: tus contraseñas viven en tu dispositivo. La sincronización entre computadoras es opcional y va cifrada de punta a punta con una frase que solo vos elegís — ni siquiera nosotros podríamos leerla aunque quisiéramos (y no queremos, tenemos suficiente con recordar las nuestras).
+```bash
+cd src/password-pack-backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python run.py
+```
 
-## 🤝 ¿Encontraste un bug? ¿Tenés una idea?
+La API queda disponible en `http://localhost:8000` y su documentación en
+`http://localhost:8000/docs`.
 
-Los issues y los pull requests son bienvenidos. Si el bug es "se me olvidó mi contraseña maestra", lamentablemente ese no lo arreglamos ni nosotros.
+Para conectarla desde el frontend:
 
-## 📄 Licencia
+```bash
+VITE_API_URL=http://localhost:8000 npm run dev
+```
 
-ISC — hacé lo que quieras, básicamente.
+La sincronización es opcional: la aplicación funciona sin levantar este
+servidor.
 
----
+## Seguridad y privacidad
 
-## 📥 Descargar
+La aplicación local no necesita una cuenta ni envía contraseñas por defecto.
+Los packs de sincronización se cifran en el cliente con AES-GCM antes de
+subirse. El servidor recibe únicamente el contenido cifrado, pero la frase de
+seguridad no se puede recuperar si se pierde.
 
-¿No querés compilarlo vos mismo? Buscá la última versión ya compilada en la sección de **[Releases](https://github.com/tu-usuario/gestor-passwords/releases)** del repositorio y descargá el instalador para tu sistema operativo.
+Para un despliegue público se recomienda utilizar HTTPS, restringir CORS,
+añadir autenticación y usar PostgreSQL en lugar de SQLite.
 
-Mientras no haya una release publicada, seguí los pasos de **["Poner el proyecto a andar"](#-poner-el-proyecto-a-andar)** de más arriba — total, dos minutos de terminal nunca mataron a nadie.
+## Licencia
 
-## ☕ ¿Te sirvió? Invitame un cafecito
-
-Esto lo hice a pulmón, con café, música y algún que otro `console.log` que se me olvidó borrar (si encontraste uno, hacé de cuenta que no). Si esta app te salvó de perder una contraseña o simplemente te cayó simpática, podés invitarme un café acá:
-
-No es obligatorio, eh. Pero si lo hacés, prometo tomármelo pensando en vos. 🫶
-
-<p align="center">
-  <a href="https://cafecito.app/elias_mk">
-  <img width="572"  alt="image" src="https://github.com/user-attachments/assets/8e0f827e-d147-41bf-9dc3-358d9113342f"alt=" Invitame un cafecito "/>
-  </a>
-</p>
-
+ISC.

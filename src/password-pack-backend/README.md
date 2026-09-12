@@ -24,22 +24,35 @@ es importante para no dejar contraseñas en texto plano en el servidor.
 
 ## Instalación
 
+Desde la raíz del repositorio:
+
 ```bash
-cd password-pack-backend
+cd src/password-pack-backend
 python3 -m venv venv
 source venv/bin/activate        # en Windows: venv\Scripts\activate
 pip install -r requirements.txt
+cp .env.example .env            # opcional: ajustar la configuración
 ```
 
-## Correrlo
+## Correrlo en la PC principal
 
 ```bash
+cd src/password-pack-backend
+source venv/bin/activate
 python run.py
 ```
 
-Esto levanta el server en `http://localhost:8000`, con recarga automática
-al guardar cambios. La documentación interactiva queda en
-`http://localhost:8000/docs`.
+El servidor escucha en todas las interfaces de red (`0.0.0.0:8000`).
+En la PC principal se puede abrir `http://localhost:8000/docs`.
+
+Para probarlo desde otra computadora conectada a la misma red, usar la IP
+local de la PC principal, por ejemplo:
+
+```text
+http://192.168.0.12:8000/docs
+```
+
+Si el acceso remoto falla, hay que permitir el puerto `8000` en el firewall.
 
 ## Endpoints
 
@@ -68,7 +81,12 @@ curl -X DELETE http://localhost:8000/api/packs/VSM7A8Z2
 
 ## Configuración
 
-Todo se ajusta con variables de entorno (ver `.env.example`):
+Todo se ajusta con variables de entorno (ver `.env.example`). Para cargar
+la configuración local:
+
+```bash
+cp .env.example .env
+```
 
 - `PACK_EXPIRY_DAYS` (default `30`)
 - `DATABASE_URL` (default `sqlite:///./passpacks.db` — para producción con
