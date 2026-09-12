@@ -40,7 +40,7 @@ Necesitás tener [Node.js](https://nodejs.org/) instalado. Después:
 
 ```bash
 # Clonar el repo
-git clone https://github.com/tu-usuario/gestor-passwords.git
+git clone https://github.com/Elias-mc/gestor-passwords
 cd gestor-passwords
 
 # Instalar dependencias
